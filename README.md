@@ -34,5 +34,5 @@ Project Format:
 	41.188981, -114.088269 (West Coast) 
 	37.211001, -81.401026 (East Coast)
 	Base Map: We plan to use a plain dark base map such as mapbox://styles/mapbox/dark-v10. Since our topic is housing market, a dark base map will provide better color contrast for readability.
-    
-	Layers: the layers our map will have are, general US housing market (choropleth or proportional symbol), pre covid west (choropleth or proportional symbol),  post covid west (choropleth or proportional symbol),  pre covid east (choropleth or proportional symbol),  and post covid east (choropleth or proportional symbol). This will be shown through clickable buttons along the side of our map. Those layers will be generated using the Redfin Housing Market 2012-2021 data set joining the US County Database to acquire the geography data column.
+
+Layers: the layers our map will have are, general US housing market (choropleth or proportional symbol), pre covid west (choropleth or proportional symbol),  post covid west (choropleth or proportional symbol),  pre covid east (choropleth or proportional symbol),  and post covid east (choropleth or proportional symbol). This will be shown through clickable buttons along the side of our map. Those layers will be generated using the Redfin Housing Market 2012-2021 data set joining the US County Database to acquire the geography data column.
