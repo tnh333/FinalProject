@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>West Housing</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <style>
+
+        #title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 20px;
+            margin-left: 20px;
+            font-family: 'Serif', Georgia;
+            font-size: 25pt;
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
+        }
+
+        #subtitle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 55px;
+            margin-left: 125px;
+            font-family: 'Serif', Georgia;
+            font-size: 15pt;
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* the layout of the legend panel */
+        #legend {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 110px;
+            background: rgb(255, 252, 222);
+            margin-right: 20px;
+            margin-bottom: 40px;
+            padding: 10px 20px 10px 10px;
+            border-radius: 3px;
+            text-align: left;
+            font-family: 'Serif', Georgia;
+        }
+
+        /* each line for a break */
+        .break {
+            position: relative;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* basic style for a dot/circle */
+        .dot {
+            display: inline-block;
+            margin-top: 5px;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        /* the label for the dot */
+        .dot-label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-style: italic;
+        }
+
+        /* the text color of a hyper link */
+        a {
+            color: black
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="legend"></div>
+    <div id="title">
+        Housing Prices in the US West
+    </div>
+    <script>
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+        let map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/dark-v10',
+            zoom: 5, // starting zoom
+            center: [-120, 40], // starting center
+            projection: 'albers'
+        });
+
+        const median_sale_price = [500000, 1000000, 2000000],
+            colors = ['rgb(153,204,255)', 'rgb(51, 153, 255)', 'rgb(0, 76, 153)'],
+            radii = [5, 10, 15];
+
+        //load data to the map as new layers.
+        //map.on('load', function loadingData() {
+        map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
+
+            // when loading a geojson, there are two steps
+            // add a source of the data and then add the layer out of the source
+            map.addSource('US-housing', {
+                type: 'geojson',
+                data: 'assets/CoastGeo.geojson'
+            });
+
+            map.addLayer({
+                    'id': 'us-house-layer',
+                    'type': 'circle',
+                    'source': 'US-housing',
+                    'paint': {
+                        // increase the radii of the circle as the zoom level and dbh value increases
+                        'circle-radius': {
+                            'property': 'house',
+                            'stops': [
+                                [{
+                                    zoom: 5,
+                                    value: median_sale_price[0]
+                                }, radii[0]],
+                                [{
+                                    zoom: 5,
+                                    value: median_sale_price[1]
+                                }, radii[1]],
+                                [{
+                                    zoom: 5,
+                                    value: Mean[2]
+                                }, radii[2]]
+                            ]
+                        },
+                        'circle-color': {
+                            'property': 'house',
+                            'stops': [
+                                [median_sale_price[0], colors[0]],
+                                [median_sale_price[1], colors[1]],
+                                [median_sale_price[2], colors[2]]
+                            ]
+                        },
+                        'circle-stroke-color': 'gray',
+                        'circle-stroke-width': 1,
+                        'circle-opacity': 0.6
+                    }
+                },
+                'waterway-label'
+            );
+
+
+            // click on tree to view magnitude in a popup
+            map.on('click', 'us-house-layer', (event) => {
+                new mapboxgl.Popup()
+                    .setLngLat(event.features[0].geometry.coordinates)
+                    .setHTML(`<strong>State:</strong> ${event.features[0].properties.state} <br> <strong>Median Price: $</strong> ${event.features[0].properties.median_sale_price}`)
+                    .addTo(map);
+            });
+
+        });
+
+
+        // create legend
+        
+        const legend = document.getElementById('legend');
+
+        //set up legend grades and labels
+        var labels = ['<strong>Median House Price</strong>'],
+            vbreak;
+        //iterate through grades and create a scaled circle and label for each
+        for (var i = 0; i < median_sale_price.length; i++) {
+            vbreak = median_sale_price[i];
+            // you need to manually adjust the radius of each dot on the legend 
+            // in order to make sure the legend can be properly referred to the dot on the map.
+            dot_radii = 2 * radii[i];
+            labels.push(
+                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: ' + dot_radii +
+                'px; height: ' +
+                dot_radii + 'px; "></i> <span class="dot-label" style="top: ' + dot_radii / 2 + 'px;">' + vbreak +
+                '</span></p>');
+
+        }
+        
+        // add the data source
+        const source =
+            '<p style="text-align: right; font-size:10pt">Source: <a href="https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv">NYTimes</a></p>';
+        // combine all the html codes.
+        legend.innerHTML = labels.join('') + source;
+    </script>
+
+</body>
+
+</html>
