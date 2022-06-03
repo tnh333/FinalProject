@@ -23,18 +23,27 @@
     <div id="info">
         <div id="title">
             Housing Market in the United States
-            <span><a href="https://github.com/tnh333/covidhousingmarket" target="_blank"><i class="bi bi-github"></i></a></span>
-            <span id="reset"><a href="#">Return to Beginning</a></span>
+            <div class="right">
+                <div id="link-holder">
+                    <span><a href="https://github.com/tnh333/covidhousingmarket" target="_blank"><i class="bi bi-github"></i></a></span>
+                    <button class="button" onclick="window.location.href = 'about.html'">About</button>
+                    <button class="button" onclick="window.location.href = 'info.html'">More Info</button>
+                </div>
+            </div>
         </div>
         <div id="count" class="card">
-            <h5 id="desc"> Second Heading to explain project a little further</h5>
-            <p id="earthquake-count"></p>
+            <h5 id="desc">Click on the different buttons below to see the similarities and differences between the phenomenon</h5>
         </div>
-        <div id="earthquake-chart">Section for clickable filters for different maps</div>
+        <div id="buttons">
+            <button class="button" onclick="window.location.href = 'map1.html'">Whole US Housing</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Pre-Covid West</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Post-Covid West</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Pre-Covid East</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Post-Covid East</button>
+        </div>
 
         <div id="footer">
-            (PlaceHolder)
-            Significance: The significance of this project is to show any changes within this market before and after covid, 
+            The significance of this project is to show any changes within this market before and after covid, 
             while also comparing the East and West coast markets. This will be beneficial for buyers and sellers to find the best
              place to participate in the market. Also, people interested in this topic can draw conclusions about the East and West markets.
         </div>
@@ -49,11 +58,11 @@
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/dark-v10',
             zoom: 3, // starting zoom
-            center: [-100, 40], // starting center
+            center: [-113, 40], // starting center
             projection: 'albers'
         });
 
-        const Mean = [5000, 50000, 200000],
+        const Mean = [100000, 150000, 250000],
             colors = ['rgb(153,204,255)', 'rgb(51, 153, 255)', 'rgb(0, 76, 153)'],
             radii = [3, 15, 20];
 
@@ -65,7 +74,7 @@
             // add a source of the data and then add the layer out of the source
             map.addSource('US-housing', {
                 type: 'geojson',
-                data: 'assets/ushouse.geojson'
+                data: 'assets/us-house.geojson'
             });
 
             map.addLayer({
@@ -75,7 +84,7 @@
                     'paint': {
                         // increase the radii of the circle as the zoom level and dbh value increases
                         'circle-radius': {
-                            'property': 'house',
+                            'property': 'Mean',
                             'stops': [
                                 [{
                                     zoom: 5,
@@ -92,7 +101,7 @@
                             ]
                         },
                         'circle-color': {
-                            'property': 'house',
+                            'property': 'Mean',
                             'stops': [
                                 [Mean[0], colors[0]],
                                 [Mean[1], colors[1]],
@@ -124,7 +133,7 @@
         const legend = document.getElementById('legend');
 
         //set up legend grades and labels
-        var labels = ['<strong>House Price</strong>'],
+        var labels = ['<strong>House Price (avg)</strong>'],
             vbreak;
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < Mean.length; i++) {
@@ -142,7 +151,7 @@
         
         // add the data source
         const source =
-            '<p style="text-align: right; font-size:10pt">Source: <a href="https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv">NYTimes</a></p>';
+            '<p style="text-align: right; font-size:10pt">Source: <a href="https://www.kaggle.com/datasets/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv">Kaggle</a></p>';
         // combine all the html codes.
         legend.innerHTML = labels.join('') + source;
     </script>

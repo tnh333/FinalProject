@@ -108,7 +108,7 @@
             projection: 'albers'
         });
 
-        const Mean = [0, 50000, 200000],
+        const Mean = [100000, 150000, 250000],
             colors = ['rgb(153,204,255)', 'rgb(51, 153, 255)', 'rgb(0, 76, 153)'],
             radii = [3, 15, 20];
 
@@ -120,7 +120,7 @@
             // add a source of the data and then add the layer out of the source
             map.addSource('US-housing', {
                 type: 'geojson',
-                data: 'assets/ushouse.geojson'
+                data: 'assets/us-house.geojson'
             });
 
             map.addLayer({
@@ -130,7 +130,7 @@
                     'paint': {
                         // increase the radii of the circle as the zoom level and dbh value increases
                         'circle-radius': {
-                            'property': 'house',
+                            'property': 'Mean',
                             'stops': [
                                 [{
                                     zoom: 5,
@@ -147,7 +147,7 @@
                             ]
                         },
                         'circle-color': {
-                            'property': 'house',
+                            'property': 'Mean',
                             'stops': [
                                 [Mean[0], colors[0]],
                                 [Mean[1], colors[1]],

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>About</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web|Oswald" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #9c9c9c;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+            background-color: rgb(85, 85, 85);
+        }
+
+        .about-section {
+            padding: 50px;
+            text-align: center;
+            background-color: rgb(85, 85, 85);
+            color: rgb(255, 255, 255);
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+        .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .title {
+            color: black;
+        }
+
+        @media screen and (max-width: 650px) {
+            .column {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        h2{
+            color: white;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body> 
+<div class="about-section">
+    <h1>About Us</h1>
+    <p>Meet the Team!</p>
+  </div>
+  
+  <h2 style="text-align:center">Our Geog 458 Team</h2>
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <img src="img/aboutphoto.jpeg" alt="Tim" style="width:100%">
+        <div class="container">
+          <h2>Tim Hahn</h2>
+          <p class="title">Member</p>
+          <p>Senior Graduating with a BA in Geography and a minor in Informatics</p>
+          <p><a href="https://github.com/tnh333">GitHub</a></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <img src="/w3images/team2.jpg" alt="Justin" style="width:100%">
+        <div class="container">
+          <h2>Justin Lee</h2>
+          <p class="title">Member</p>
+          <p>Year and major/minor</p>
+          <p><a href="https://github.com/justin501">GitHub</a></p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="column">
+      <div class="card">
+        <img src="/w3images/team3.jpg" alt="Tianhao" style="width:100%">
+        <div class="container">
+          <h2>Tianhao Yao</h2>
+          <p class="title">Member</p>
+          <p>Year and major/minor</p>
+          <p><a href="https://github.com/yaothao">GitHub</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="/w3images/team3.jpg" alt="Fangge" style="width:100%">
+      <div class="container">
+        <h2>Fangge Xiong</h2>
+        <p class="title">Member</p>
+        <p>Year and major/minor</p>
+        <p><a href="https://github.com/FanggeXiong">GitHub</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="column">
+    <div class="card">
+      <img src="/w3images/team3.jpg" alt="Angel" style="width:100%">
+      <div class="container">
+        <h2>Angel Diaz</h2>
+        <p class="title">Member</p>
+        <p>Year and major/minor</p>
+        <p><a href="https://github.com/diaza6">GitHub</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+
+  </html>

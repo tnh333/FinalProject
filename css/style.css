@@ -20,10 +20,39 @@ body {
     bottom: 1%;
     left: .5%;
     padding: 40px 15px 900px 15px;
-    background: #ffffff;
+    background: #9c9c9c;
     color: rgb(0, 0, 0);
     
   
+  }
+
+  .right{
+    display: flex;
+    justify-content: right;
+  }
+
+  #link-holder .button{
+    background-color: rgb(85,85,85);
+    border: 2px solid black;
+    color: white;
+    padding: 5px 15px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #link-holder .button:hover{
+    opacity: 1
+  }
+
+  #link{
+    background-color: white;
+    color: grey;
   }
   
   
@@ -89,7 +118,7 @@ body {
       margin-bottom: 40px;
       padding: 10px 20px 10px 10px;
       border-radius: 3px;
-      text-align: center;
+      text-align: left;
       font-family: 'Open Sans', sans-serif;
   }
   
@@ -116,7 +145,26 @@ body {
       font-style: italic;
   }
   
-  
+  #buttons{
+    position: middle;
+  }
+
+  .button{
+    border: 4px solid black;
+    background-color: rgb(85,85,85);
+    color: white;
+    padding: 30px 200px;
+    text-align: center;
+    font-size: 18px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button:hover {opacity: 1}
   
   /* bar chart */
   text {
