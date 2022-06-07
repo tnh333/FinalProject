@@ -1,6 +1,6 @@
 # The US Housing Market vs. Covid-19
 
-[Main Page](tnh333.github.io/covidhousingmarket/index.html)
+[Main Page](https://tnh333.github.io/covidhousingmarket/index.html)
 
 **Team Members:** Tim Hahn, Justin Lee, Tianhao Yao, Fangge Xiong, Angel Diaz 
 
