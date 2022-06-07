@@ -19,19 +19,6 @@
             box-sizing: inherit;
         }
 
-        .column {
-            float: left;
-            width: 33.3%;
-            margin-bottom: 16px;
-            padding: 0 8px;
-        }
-
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            margin: 8px;
-            background-color: rgb(85, 85, 85);
-        }
-
         .about-section {
             padding: 50px;
             text-align: center;
@@ -65,6 +52,103 @@
         }
 
 
+        .split {
+            height: 100%;
+            width: 50%;
+            position: absolute;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 700px;
+        }
+
+/* Control the left side */
+        .left {
+            left: 0;
+            top: 15%;
+            bottom: 100%;
+        }
+
+/* Control the right side */
+        .right {
+            right: 0;
+            top: 15%;
+            bottom: 100%;
+        }
+
+/* If you want the content centered horizontally and vertically */
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+/* Style the image inside the centered container, if needed */
+        .centered img {
+            width: 600px;
+            height: 400px;
+        }
+
+        .section{
+            position: sticky;
+        }
+
+        .below{
+            position: relative;
+            bottom: -700px;
+            font-size: 18px;
+        }
+
+        p.indent{
+            text-indent: 50px;
+        }
+
+        .chart{
+            position: relative;
+        }
+                
+        #chart2{
+            position: relative;
+             bottom: -150px;
+        }
+
+        #chart3{
+            position: relative;
+             bottom: -150px;
+        }
+
+        #heading{
+            position: relative;
+            bottom: -700px;
+            text-align: center;
+        }
+
+        #Acknowlegements{
+            padding: 50px;
+            text-align: center;
+            background-color: rgb(85, 85, 85);
+            color: rgb(255, 255, 255);
+            position: relative;
+             bottom: -900px;
+        }
+
+        #chart{
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #sources{
+            color: white;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        
+       
+
     </style>
 
 
@@ -72,10 +156,213 @@
 
 <body> 
 <div class="about-section">
-    <h1>Info and Acknowlegements</h1>
+    <h1>More Info and Acknowlegements</h1>
     <p>More on the housing market in the US</p>
   </div>
+
+  <div class="section">
+  <div class="split left">
+    <div class="centered">
+      <img src="img/OregonHome.jpg" alt="West">
+      <h2>Example West Coast Home</h2>
+      <p>Western style homes can be explained by the influence of a few things. First the gold rush odes to the high class style in certain areas like california.
+          Secondly they have the influence of the people who owned the land before hand drawing inspiration from the traditional Spanish looks and the Latin American culture. Climate 
+          also plays a large role in their design. The homes on this side are constructed to withstand earthquakes and sometimes mudslides.
+      </p>
+    </div>
+  </div>
   
+  <div class="split right">
+    <div class="centered">
+      <img src="img/EastHome.jpg" alt="East">
+      <h2>Example East Coast Home</h2>
+      <p>Eastern style homes structural influence comes from the British and European cultures that the people who moved over first were ruled by. They style is traditional Victorian that 
+          and you will commonly see brick and stone buildings with ivy covering them. The East Coast's climate also is an influence to how the houses are constructed and the style that they have.
+           The climate on this side is known for heavy storms with snow and hurricanes. 
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="heading">
+    <h2>More Info</h2>
+
+</div>
+
+<div class="below">
+    <p class="indent">
+        In this section we will go over some of the deeper analysis of the housing market in the United States. 
+        The maps created give us a sense of what is happening, however we can learn more if theses maps are paired with other forms 
+        of information as well.
+    </p>
+
+    <p class="indent">
+        Many people might think that COVID-19 had a negative effect on the housing market but the opposite is actually more true. 
+        The corona virus pandemic was no doubt a devestating event that had many negative impacts. However, one area that seemed get better, or 
+        at least stay steady was the housing market in the United States. After doing a bit of research we found that there were many factors 
+        that went into the reason why the housing market didnt crash. There were a series of "large transfer payments" which include stimulus checks, 
+        and unemployment benefits. This meant that income and the demand for housing did not crash. Also, during this time mortgage interest rates 
+        were very low which increased the demand for housing. One of the smaller factors is that people were working form home so they could work far 
+        from the work place and get homes outside the area. 
+        <br>
+        <i>Source: <a href="https://www.dallasfed.org/research/economics/2021/1228.aspx">dallasfed.org</a></i> 
+        <br> 
+        <br>
+        Below is a chart that shows the rising house prices during the time of the Covid-19 pandemic
+    </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div id="chart">
+            <div id="centered2">
+            <img src="img/chart1.png" alt="chart" style="width:100%">
+            </div>  
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        <div id="chart2">
+        <p class="indent">
+            Diving further into some of the reasons why the prices of homes in the US rose during the pandemic we found that rent and supplies for homes 
+            also played a large role. The US census gathered some information from <i>Zillow</i> and found that many renters could not afford rent in cities but could 
+            afford to buy homes further away since mortgage rates were low. Also Zillow predicted that 2020 would have been a "big home-buying year" due to 
+            millennials reaching the age that the average person buys a home. 
+            <br>
+            <i>Sources: <a href="https://www.census.gov/library/stories/2021/10/zillow-and-census-bureau-data-show-pandemics-impact-on-housing-market.html">census.gov</a>
+            <br> 
+            <a href="https://www.whitehouse.gov/cea/written-materials/2021/09/09/housing-prices-and-inflation/">whitehouse.gov</a>
+            </i>
+            <br>
+            <br>
+            Below is a chart showing the increasing rent index alongside the CPI: Rent
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+        <div id="chart">
+            <div id="centered2">
+                <img src="img/rentchart.jpg" alt="rent" style="width:100%">
+            </div>
+        </div>
+        <br>
+        <br> 
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div id="chart3">
+            <p class="indent">
+                Another factor that contributed greatly to the increase in the housing market during covid was the supply issues. 
+                 The prices of housing material greatly rose during the pandemic which in turn raises the prices of homes. Lumber and 
+                 some of the main metals used to construct houses were at all time highs during this time and that caused the construction of the 
+                 homes to cost more as well as raising the list price. 
+                 <br>
+                 <i>Sources: <a href="https://www.whitehouse.gov/cea/written-materials/2021/09/09/housing-prices-and-inflation/">whitehouse.gov</a></i>
+                 <br>
+                 <br>
+                 Below is a chart showing the increasing cost of building materials for homes.
+            </p>
+            <br>
+            <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+
+            <div id="chart">
+                <div id="centered2">
+                <img src="img/materialchart.jpg" alt="material" style="width:100%">
+                </div>
+            </div>
+            <br>
+            <br> 
+            </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        </div>
+    </div>
+  
+    <div id="Acknowlegements">
+        <h2>Acknowlegements</h2>
+        <h4><b>Professor: Bo Zhao</b></h4>
+        <h4><b>Teaching Assistant: Steven Bao</b></h4>
+        <br>
+        <br>
+        <br>
+        <h3>Sources</h3>
+        <p id="sources">
+            |   <a href="https://www.w3schools.com/">W3Schools</a>   |   <a href="https://www.mapbox.com/">Mapbox</a>   |   
+            <a href="https://www.github.com/">GitHub</a>   |   <a href="https://coder-coder.com/">Coder-Coder</a>  |   
+            <a href="https://www.qgis.org/en/site/">QGIS</a>   |   <a href="https://www.dallasfed.org/research/economics/2021/1228.aspx">DallasFed</a>   |
+            <a href="https://www.census.gov/library/stories/2021/10/zillow-and-census-bureau-data-show-pandemics-impact-on-housing-market.html">Census</a>   |   
+            <a href="https://www.whitehouse.gov/cea/written-materials/2021/09/09/housing-prices-and-inflation/">The White House</a>   |   
+            <a href="https://www.slocumhalldesign.com/blog/a-tale-of-two-coasts-design-differences-between-west-and-east-coasts/">Slocum Hall</a>   |   
+            <a href="https://www.insider.com/homes-popular-style-us-2017-10#illinois-bungalow-14">Insider</a>   |   
+        </p>
+
+        <br> 
+
+        <h3>Data Sets</h3>
+        <p id="sources">
+            |   <a href="https://www.census.gov/data/tables.html">Census</a>   |   <a href="https://www.kaggle.com/datasets/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv">Kaggle</a>   |   
+            <a href="https://data.world/adv34715/housing-price-and-population-change/workspace/file?filename=State_Zhvi_AllHomes.csv">DataWorld</a>   |   <a href="https://www.kaggle.com/datasets/thuynyle/redfin-housing-market-data/code?select=state_market_tracker.tsv000">Kaggle</a>  |   
+            <a href="https://simplemaps.com/data/us-counties">SimpleMaps</a>   |   
+        </p>
+        
+
+    </div>
   
 
   </body>
