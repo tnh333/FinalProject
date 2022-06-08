@@ -32,7 +32,7 @@
             </div>
         </div>
         <div id="count" class="card">
-            <h5 id="desc">Click on the different buttons below to see the similarities and differences between the phenomenon</h5>
+            <h5 id="desc">Click on the different buttons below to see the similarities and differences between the phenomenon <br> (Some maps take some time to load) </h5>
         </div>
         <div id="buttons">
             <button class="button" onclick="window.location.href = 'map1.html'">Whole US Housing</button>
@@ -62,9 +62,8 @@
             projection: 'albers'
         });
 
-        const Mean = [100000, 150000, 250000],
-            colors = ['rgb(153,204,255)', 'rgb(51, 153, 255)', 'rgb(0, 76, 153)'],
-            radii = [3, 15, 20];
+        const Mean = [49023, 67887, 242857]
+            colors = ['rgb(247, 251, 255)', 'rgb(43, 123, 186)', 'rgb(8, 48, 107)'];
 
         //load data to the map as new layers.
         //map.on('load', function loadingData() {
@@ -72,79 +71,56 @@
 
             // when loading a geojson, there are two steps
             // add a source of the data and then add the layer out of the source
-            map.addSource('US-housing', {
+            map.addSource('house-mean', {
                 type: 'geojson',
-                data: 'assets/us-house.geojson'
+                data: 'assets/EditHouse.geojson'
             });
 
             map.addLayer({
-                    'id': 'us-house-layer',
-                    'type': 'circle',
-                    'source': 'US-housing',
+                    'id': 'US-mean-layer',
+                    'type': 'fill',
+                    'source': 'house-mean',
                     'paint': {
-                        // increase the radii of the circle as the zoom level and dbh value increases
-                        'circle-radius': {
+                        'fill-color' : {
                             'property': 'Mean',
                             'stops': [
-                                [{
-                                    zoom: 5,
-                                    value: Mean[0]
-                                }, radii[0]],
-                                [{
-                                    zoom: 5,
-                                    value: Mean[1]
-                                }, radii[1]],
-                                [{
-                                    zoom: 5,
-                                    value: Mean[2]
-                                }, radii[2]]
+                            [Mean[0], colors[0]],
+                            [Mean[1], colors[1]],
+                            [Mean[2], colors[2]]
+
                             ]
-                        },
-                        'circle-color': {
-                            'property': 'Mean',
-                            'stops': [
-                                [Mean[0], colors[0]],
-                                [Mean[1], colors[1]],
-                                [Mean[2], colors[2]]
-                            ]
-                        },
-                        'circle-stroke-color': 'gray',
-                        'circle-stroke-width': 1,
-                        'circle-opacity': 0.6
+                        }, 
+                        
                     }
-                },
+
+                 },
                 'waterway-label'
-            );
+                );
 
 
             // click on tree to view magnitude in a popup
-            map.on('click', 'us-house-layer', (event) => {
+            map.on('click', 'US-mean-layer', (event) => {
                 new mapboxgl.Popup()
-                    .setLngLat(event.features[0].geometry.coordinates)
-                    .setHTML(`<strong>County:</strong> ${event.features[0].properties.County} <br> <strong>Mean Price: $</strong> ${event.features[0].properties.Mean}`)
+                    .setLngLat(event.lngLat)
+                    .setHTML(`<strong>County:</strong> ${event.features[0].properties.NAME} <br> <strong>Mean Price: $</strong> ${event.features[0].properties.Mean}</>`)
                     .addTo(map);
             });
 
         });
-
-
-        // create legend
         
+        // create legend
         const legend = document.getElementById('legend');
 
         //set up legend grades and labels
-        var labels = ['<strong>House Price (avg)</strong>'],
+        var labels = ['<strong>Mean House Price</strong>'],
             vbreak;
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < Mean.length; i++) {
             vbreak = Mean[i];
             // you need to manually adjust the radius of each dot on the legend 
             // in order to make sure the legend can be properly referred to the dot on the map.
-            dot_radii = 2 * radii[i];
             labels.push(
-                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: ' + dot_radii +
-                'px; height: ' +
-                dot_radii + 'px; "></i> <span class="dot-label" style="top: ' + dot_radii / 2 + 'px;">' + vbreak +
+                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
                 '</span></p>');
 
         }
