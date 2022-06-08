@@ -118,7 +118,7 @@
     <div id="legend"></div>
     <div id="legend2"></div>
     <div id="title">
-        <h3 style="font-family: 'Serif', Georgia;">Pre-Covid West Market</h3>
+        <h3 style="font-family: 'Serif', Georgia;">Post-Covid West Market</h3>
         <div class='session' id='sliderbar'>
             <h8>Month: <label id='active-month'>January</label></h8>
             <input id='slider' class='row' type='range' min='1' max='12' step='1' value='1' />
@@ -128,12 +128,10 @@
             <div class='row' id='filters'>
               <input id='all' type='radio' name='toggle' value='all' checked='checked'>
               <label for='all'>All</label>
-              <input id='2017' type='radio' name='toggle' value='2017'>
-              <label for='2017'>2017</label>
-              <input id='2018' type='radio' name='toggle' value='2018'>
-              <label for='2018'>2018</label>
-              <input id='2019' type='radio' name='toggle' value='2019'>
-              <label for='2019'>2019</label>
+              <input id='2020' type='radio' name='toggle' value='2020'>
+              <label for='2020'>2020</label>
+              <input id='2021' type='radio' name='toggle' value='2021'>
+              <label for='2021'>2021</label>
             </div>
         </div>
     </div>
@@ -221,7 +219,7 @@
         });
 
         var filterMonth = ['==', ['number', ['get', 'month']], 1];
-        var filterYear = ['match', ['get', 'year'], [2017, 2018, 2019], true, false];
+        var filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
         
         document.getElementById('slider').addEventListener('input', (event) => {
         const month = parseInt(event.target.value);
@@ -238,14 +236,12 @@
         document.getElementById('filters').addEventListener('change', (event) => {
         const year = event.target.value;
         // update the map filter
-        if (year === '2019') {
-            filterYear = ['==', ['number', ['get', 'year']], 2019];
-        } else if (year === '2017') {
-            filterYear = ['==', ['number', ['get', 'year']], 2017];
-        } else if (year === '2018') {
-            filterYear = ['==', ['number', ['get', 'year']], 2018];
+        if (year === '2020') {
+            filterYear = ['==', ['number', ['get', 'year']], 2020];
+        } else if (year === '2021') {
+            filterYear = ['==', ['number', ['get', 'year']], 2021]; 
         } else if (year === 'all') {
-            filterYear = ['match', ['get', 'year'], [2017, 2018, 2019], true, false];
+            filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
         } else {
             console.log('error');
         }
