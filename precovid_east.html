@@ -136,6 +136,9 @@
               <label for='2019'>2019</label>
             </div>
         </div>
+        <div class='session' id='totalHome' style="margin-top: 20px;">
+            <h8>Total Homes Sold: </h8>
+        </div>
     </div>
     <script>
         mapboxgl.accessToken =
@@ -234,6 +237,7 @@
         "October", "November", "December"];
          // update text in the UI
         document.getElementById('active-month').innerText = monthList[month - 1];
+        getHomes();
         });
         document.getElementById('filters').addEventListener('change', (event) => {
         const year = event.target.value;
@@ -250,8 +254,21 @@
             console.log('error');
         }
         map.setFilter('US-coast-layer', ['all', filterMonth, filterYear]);
+        getHomes();
         });
-
+        // query
+        function getHomes () {
+        const feat = map.querySourceFeatures('house-coast', {
+                    sourceLayer: 'original',
+                    filter: ['all', filterMonth, filterYear]
+                });
+                var totalHome = 0;
+                for (let i = 0; i < feat.length; i++){
+                    totalHome += feat[i].properties.homes_sold;
+                }
+                document.getElementById('totalHome').innerHTML = "Total Homes Sold: " + totalHome;
+                //console.log(feat[0].properties.homes_sold);
+            };
         // create legend
         const legend = document.getElementById('legend');
 

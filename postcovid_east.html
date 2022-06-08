@@ -132,9 +132,13 @@
               <label for='2020'>2020</label>
               <input id='2021' type='radio' name='toggle' value='2021'>
               <label for='2021'>2021</label>
-            </div>
+            </div>  
+        </div> 
+        <div class='session' id='totalHome' style="margin-top: 20px;">
+            <h8>Total Homes Sold: </h8>
         </div>
     </div>
+    
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
@@ -169,6 +173,7 @@
                     'id': 'US-coast-layer',
                     'type': 'circle',
                     'source': 'house-coast',
+                    'sourceLayer': 'original',
                     'paint': {
                         // increase the radii of the circle as the zoom level and dbh value increases
                         'circle-radius': {
@@ -217,6 +222,10 @@
             });
 
         });
+        // Find all features in one source layer in a vector source
+        
+
+        
 
         var filterMonth = ['==', ['number', ['get', 'month']], 1];
         var filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
@@ -226,12 +235,12 @@
         // update the map
         filterMonth = ['==', ['number', ['get', 'month']], month];
         map.setFilter('US-coast-layer', ['all', filterMonth, filterYear]);
-             console.log("yeah");
         // converting 0-23 hour to AMPM format
         const monthList = ["January", "Feburary", "March", "April", "May", "Jun", "July", "August", "September",
         "October", "November", "December"];
          // update text in the UI
         document.getElementById('active-month').innerText = monthList[month - 1];
+        getHomes();
         });
         document.getElementById('filters').addEventListener('change', (event) => {
         const year = event.target.value;
@@ -246,8 +255,21 @@
             console.log('error');
         }
         map.setFilter('US-coast-layer', ['all', filterMonth, filterYear]);
+        getHomes();
         });
-
+        // query
+        function getHomes () {
+        const feat = map.querySourceFeatures('house-coast', {
+                    sourceLayer: 'original',
+                    filter: ['all', filterMonth, filterYear]
+                });
+                var totalHome = 0;
+                for (let i = 0; i < feat.length; i++){
+                    totalHome += feat[i].properties.homes_sold;
+                }
+                document.getElementById('totalHome').innerHTML = "Total Homes Sold: " + totalHome;
+                //console.log(feat[0].properties.homes_sold);
+            };
         // create legend
         const legend = document.getElementById('legend');
 
