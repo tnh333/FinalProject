@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>US Housing Market</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- include google web fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web|Oswald" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+    <!-- include icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/c3.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <!-- include c3.js to make charts. c3.js is built upon d3.js -->
+    <script src="js/d3.js"></script>
+    <script src="js/c3.min.js"></script>
+</head>
+
+<body>
+    <!-- sidebar -->
+    <div id="info">
+        <div id="title">
+            Housing Market in the United States
+            <div class="right">
+                <div id="link-holder">
+                    <span><a href="https://github.com/tnh333/covidhousingmarket" target="_blank"><i class="bi bi-github"></i></a></span>
+                    <button class="button" onclick="window.location.href = 'about.html'">About</button>
+                    <button class="button" onclick="window.location.href = 'info.html'">More Info</button>
+                </div>
+            </div>
+        </div>
+        <div id="count" class="card">
+            <h5 id="desc">Click on the different buttons below to see the similarities and differences between the phenomenon <br> (Some maps take some time to load) </h5>
+        </div>
+        <div id="buttons">
+            <button class="button" onclick="window.location.href = 'map1.html'">Whole US Housing</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Pre-Covid West</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Post-Covid West</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Pre-Covid East</button>
+            <button class="button" onclick="window.location.href = 'map1.html'">Post-Covid East</button>
+        </div>
+
+        <div id="footer">
+            The significance of this project is to show any changes within this market before and after covid, 
+            while also comparing the East and West coast markets. This will be beneficial for buyers and sellers to find the best
+             place to participate in the market. Also, people interested in this topic can draw conclusions about the East and West markets.
+        </div>
+    </div>
+    <div id="map"></div>
+        
+    <div id="legend"></div>
+    <script>
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+        let map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/dark-v10',
+            zoom: 3, // starting zoom
+            center: [-113, 40], // starting center
+            projection: 'albers'
+        });
+
+        const Mean = [49023, 67887, 242857]
+            colors = ['rgb(247, 251, 255)', 'rgb(43, 123, 186)', 'rgb(8, 48, 107)'];
+
+        //load data to the map as new layers.
+        //map.on('load', function loadingData() {
+        map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
+
+            // when loading a geojson, there are two steps
+            // add a source of the data and then add the layer out of the source
+            map.addSource('house-mean', {
+                type: 'geojson',
+                data: 'assets/EditHouse.geojson'
+            });
+
+            map.addLayer({
+                    'id': 'US-mean-layer',
+                    'type': 'fill',
+                    'source': 'house-mean',
+                    'paint': {
+                        'fill-color' : {
+                            'property': 'Mean',
+                            'stops': [
+                            [Mean[0], colors[0]],
+                            [Mean[1], colors[1]],
+                            [Mean[2], colors[2]]
+
+                            ]
+                        }, 
+                        
+                    }
+
+                 },
+                'waterway-label'
+                );
+
+                
+
+            // click on tree to view magnitude in a popup
+            map.on('click', 'US-mean-layer', (event) => {
+                new mapboxgl.Popup()
+                    .setLngLat(event.lngLat)
+                    .setHTML(`<strong>County:</strong> ${event.features[0].properties.NAME} <br> <strong>Mean Price: $</strong> ${event.features[0].properties.Mean}</>`)
+                    .addTo(map);
+            });
+
+        });
+        
+        
+        // create legend
+        const legend = document.getElementById('legend');
+
+        //set up legend grades and labels
+        var labels = ['<strong>Mean House Price</strong>'],
+            vbreak;
+        //iterate through grades and create a scaled circle and label for each
+        for (var i = 0; i < Mean.length; i++) {
+            vbreak = Mean[i];
+            // you need to manually adjust the radius of each dot on the legend 
+            // in order to make sure the legend can be properly referred to the dot on the map.
+            labels.push(
+                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
+                '</span></p>');
+
+        }
+        
+        // add the data source
+        const source =
+            '<p style="text-align: right; font-size:10pt">Source: <a href="https://www.kaggle.com/datasets/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv">Kaggle</a></p>';
+        // combine all the html codes.
+        legend.innerHTML = labels.join('') + source;
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -19,7 +19,7 @@
             font-family: 'Serif', Georgia;
             font-size: 25pt;
             color: rgb(0, 0, 0);
-            background-color: rgb(255, 255, 255);
+            background-color: rgb(143, 143, 143);
         }
 
         #subtitle {
@@ -52,7 +52,7 @@
             bottom: 0;
             right: 0;
             width: 110px;
-            background: rgb(255, 252, 222);
+            background: rgb(143, 143, 143);
             margin-right: 20px;
             margin-bottom: 40px;
             padding: 10px 20px 10px 10px;
@@ -88,14 +88,31 @@
         a {
             color: black
         }
+
+        .button{
+            line-height: 20px;
+            width: 60px;
+            font-size: 10pt;
+            margin-top: 20px;
+            margin-right: 30px;
+            position:absolute;
+            top:0;
+            right:0;  
+            z-index: 1500;
+        }
+
+
     </style>
 </head>
 
 <body>
+    <div id="heading">
+        <button class="button" onclick="window.location.href = 'index.html'">Home</button>
+    </div>
     <div id="map"></div>
     <div id="legend"></div>
     <div id="title">
-        Housing Prices in the US
+        Whole US Housing Market
     </div>
     <script>
         mapboxgl.accessToken =
@@ -118,15 +135,16 @@
 
             // when loading a geojson, there are two steps
             // add a source of the data and then add the layer out of the source
-            map.addSource('US-housing', {
+            map.addSource('house-mean', {
                 type: 'geojson',
                 data: 'assets/us_housing.geojson'
+
             });
 
             map.addLayer({
-                    'id': 'us-house-layer',
-                    'type': 'circle',
-                    'source': 'US-housing',
+                    'id': 'US-mean-layer',
+                    'type': 'fill',
+                    'source': 'house-mean',
                     'paint': {
                         // increase the radii of the circle as the zoom level and dbh value increases
                         'circle-radius': {
@@ -149,22 +167,24 @@
                         'circle-color': {
                             'property': 'median_sale_price',
                             'stops': [
-                                [Mean[0], colors[0]],
-                                [Mean[1], colors[1]],
-                                [Mean[2], colors[2]]
+                            [Mean[0], colors[0]],
+                            [Mean[1], colors[1]],
+                            [Mean[2], colors[2]]
+
                             ]
-                        },
-                        'circle-stroke-color': 'gray',
-                        'circle-stroke-width': 1,
-                        'circle-opacity': 0.6
+                        }, 
+                        
                     }
-                },
+
+                 },
                 'waterway-label'
-            );
+                );
+
+                
 
 
             // click on tree to view magnitude in a popup
-            map.on('click', 'us-house-layer', (event) => {
+            map.on('click', 'US-mean-layer', (event) => {
                 new mapboxgl.Popup()
                     .setLngLat(event.features[0].geometry.coordinates)
                     .setHTML(`<strong>County:</strong> ${event.features[0].properties.county_full} <br> <strong>Median Sales Price: $</strong> ${event.features[0].properties.median_sale_price}`)
@@ -172,32 +192,26 @@
             });
 
         });
-
-
-        // create legend
         
+        // create legend
         const legend = document.getElementById('legend');
 
         //set up legend grades and labels
-        var labels = ['<strong>House Price</strong>'],
+        var labels = ['<strong>Mean House Price</strong>'],
             vbreak;
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < Mean.length; i++) {
             vbreak = Mean[i];
             // you need to manually adjust the radius of each dot on the legend 
             // in order to make sure the legend can be properly referred to the dot on the map.
-            dot_radii = 2 * radii[i];
             labels.push(
-                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: ' + dot_radii +
-                'px; height: ' +
-                dot_radii + 'px; "></i> <span class="dot-label" style="top: ' + dot_radii / 2 + 'px;">' + vbreak +
+                '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
                 '</span></p>');
 
         }
-        
         // add the data source
         const source =
-            '<p style="text-align: right; font-size:10pt">Source: <a href="https://github.com/nytimes/covid-19-data/blob/43d32dde2f87bd4dafbb7d23f5d9e878124018b8/live/us-counties.csv">NYTimes</a></p>';
+            '<p style="text-align: right; font-size:10pt">Source: <a href="https://www.kaggle.com/datasets/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv">Kaggle</a></p>';
         // combine all the html codes.
         legend.innerHTML = labels.join('') + source;
     </script>
