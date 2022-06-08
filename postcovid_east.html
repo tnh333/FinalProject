@@ -94,7 +94,7 @@
         a {
             color: black
         }
-        
+
         .button{
             line-height: 20px;
             width: 60px;
@@ -103,22 +103,21 @@
             margin-right: 30px;
             position:absolute;
             top:0;
-            right:0;  
+            right:0;
             z-index: 1500;
         }
-        
     </style>
 </head>
 
 <body>
     <div id="heading">
-        <button class="button" onclick="window.location.href = 'index.html'">Home</button>
+        <button class="button" onclick="window.location.href = 'index.html'" style="width: 100px; height: 30px;">Home</button>
     </div>
     <div id="map"></div>
     <div id="legend"></div>
     <div id="legend2"></div>
     <div id="title">
-        <h3 style="font-family: 'Serif', Georgia;">Post-Covid East Market</h3>
+        <h3 style="font-family: 'Serif', Georgia;">Post-Covid in East Market</h3>
         <div class='session' id='sliderbar'>
             <h8>Month: <label id='active-month'>January</label></h8>
             <input id='slider' class='row' type='range' min='1' max='12' step='1' value='1' />
@@ -132,9 +131,13 @@
               <label for='2020'>2020</label>
               <input id='2021' type='radio' name='toggle' value='2021'>
               <label for='2021'>2021</label>
-            </div>
+            </div>  
+        </div> 
+        <div class='session' id='totalHome' style="margin-top: 20px;">
+            <h8>Total Homes Sold: </h8>
         </div>
     </div>
+    
     <script>
         mapboxgl.accessToken =
             'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
@@ -163,12 +166,12 @@
                 data: 'assets/us_housing.geojson'
 
             });
-            
-        
+
             map.addLayer({
                     'id': 'US-coast-layer',
                     'type': 'circle',
                     'source': 'house-coast',
+                    'sourceLayer': 'original',
                     'paint': {
                         // increase the radii of the circle as the zoom level and dbh value increases
                         'circle-radius': {
@@ -194,9 +197,8 @@
                             [medianPPSF[0], colors[0]],
                             [medianPPSF[1], colors[1]],
                             [medianPPSF[2], colors[2]]
-
-                            ]
-                        }, 
+                            ],
+                        },
                         'circle-stroke-color': 'white',
                         'circle-stroke-width': 0.4,
                         'circle-opacity': 1
@@ -204,7 +206,7 @@
                     'filter': ['all', filterMonth, filterYear]
                  },
                 'waterway-label'
-                );  
+                );
 
 
             // click on tree to view magnitude in a popup
@@ -217,21 +219,25 @@
             });
 
         });
+        // Find all features in one source layer in a vector source
+        
+
+        
 
         var filterMonth = ['==', ['number', ['get', 'month']], 1];
         var filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
-        
+
         document.getElementById('slider').addEventListener('input', (event) => {
         const month = parseInt(event.target.value);
         // update the map
         filterMonth = ['==', ['number', ['get', 'month']], month];
         map.setFilter('US-coast-layer', ['all', filterMonth, filterYear]);
-             console.log("yeah");
         // converting 0-23 hour to AMPM format
         const monthList = ["January", "Feburary", "March", "April", "May", "Jun", "July", "August", "September",
         "October", "November", "December"];
          // update text in the UI
         document.getElementById('active-month').innerText = monthList[month - 1];
+        getHomes();
         });
         document.getElementById('filters').addEventListener('change', (event) => {
         const year = event.target.value;
@@ -239,15 +245,28 @@
         if (year === '2020') {
             filterYear = ['==', ['number', ['get', 'year']], 2020];
         } else if (year === '2021') {
-            filterYear = ['==', ['number', ['get', 'year']], 2021]; 
+            filterYear = ['==', ['number', ['get', 'year']], 2021];
         } else if (year === 'all') {
             filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
         } else {
             console.log('error');
         }
         map.setFilter('US-coast-layer', ['all', filterMonth, filterYear]);
+        getHomes();
         });
-
+        // query
+        function getHomes () {
+        const feat = map.querySourceFeatures('house-coast', {
+                    sourceLayer: 'original',
+                    filter: ['all', filterMonth, filterYear]
+                });
+                var totalHome = 0;
+                for (let i = 0; i < feat.length; i++){
+                    totalHome += feat[i].properties.homes_sold;
+                }
+                document.getElementById('totalHome').innerHTML = "Total Homes Sold: " + totalHome;
+                //console.log(feat[0].properties.homes_sold);
+            };
         // create legend
         const legend = document.getElementById('legend');
 
@@ -257,7 +276,7 @@
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < medianPPSF.length; i++) {
             vbreak = medianPPSF[i];
-            // you need to manually adjust the radius of each dot on the legend 
+            // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels.push(
                 '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
@@ -279,12 +298,11 @@
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < houseSold.length; i++) {
             vbreak = houseSold[i];
-            const color_for_legend = 'rgb(153,204,255)';
-            // you need to manually adjust the radius of each dot on the legend 
+            // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels2.push(
-                '<p class="break"><i class="dot" style="background:' + color_for_legend + '; width:' + 2 * radii[i] + 'px; height: ' +
-                2 * radii[i] + 'px; ; "></i> <span class="dot-label">' + vbreak +
+                '<p class="break"><i class="dot" style="background: white; width:' + 2 * radii[i] + 'px; height: ' +
+                2 * radii[i] + 'px; border-style: solid; "></i> <span class="dot-label">' + vbreak +
                 '</span></p>');
 
         }

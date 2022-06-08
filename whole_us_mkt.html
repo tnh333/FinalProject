@@ -97,7 +97,7 @@
             margin-right: 30px;
             position:absolute;
             top:0;
-            right:0;  
+            right:0;
             z-index: 1500;
         }
 
@@ -107,7 +107,7 @@
 
 <body>
     <div id="heading">
-        <button class="button" onclick="window.location.href = 'index.html'">Home</button>
+        <button class="button" onclick="window.location.href = 'index.html'" style="width: 100px; height: 30px;">Home</button>
     </div>
     <div id="map"></div>
     <div id="legend"></div>
@@ -152,15 +152,12 @@
                             [Mean[2], colors[2]]
 
                             ]
-                        }, 
-                        
+                        },
                     }
 
                  },
                 'waterway-label'
                 );
-
-                
 
 
             // click on tree to view magnitude in a popup
@@ -172,7 +169,7 @@
             });
 
         });
-        
+
         // create legend
         const legend = document.getElementById('legend');
 
@@ -182,7 +179,7 @@
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < Mean.length; i++) {
             vbreak = Mean[i];
-            // you need to manually adjust the radius of each dot on the legend 
+            // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels.push(
                 '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
