@@ -150,7 +150,6 @@
         medianPPSF = [200, 500, 800],
         houseSold = [400, 800, 1500],
             colors = ['rgb(153,204,255)', 'rgb(51, 120, 230)', 'rgb(0, 50, 200)'],
-            color2 = ['rgb(198, 235, 190)'],
             radii = [4, 10, 25];
 
         //load data to the map as new layers.
@@ -283,8 +282,8 @@
             // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels2.push(
-                '<p class="break"><i class="dot" style="background:' + color2[0] + '; width:' + 2 * radii[i] + 'px; height: ' +
-                2 * radii[i] + 'px; ; "></i> <span class="dot-label">' + vbreak +
+                '<p class="break"><i class="dot" style="background: white; width:' + 2 * radii[i] + 'px; height: ' +
+                2 * radii[i] + 'px; border-style: solid; "></i> <span class="dot-label">' + vbreak +
                 '</span></p>');
 
         }
