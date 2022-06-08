@@ -94,7 +94,7 @@
         a {
             color: black
         }
-        
+
         .button{
             line-height: 20px;
             width: 60px;
@@ -103,10 +103,10 @@
             margin-right: 30px;
             position:absolute;
             top:0;
-            right:0;  
+            right:0;
             z-index: 1500;
         }
-        
+
     </style>
 </head>
 
@@ -153,6 +153,7 @@
         medianPPSF = [200, 500, 800],
         houseSold = [400, 800, 1500],
             colors = ['rgb(153,204,255)', 'rgb(51, 120, 230)', 'rgb(0, 50, 200)'],
+            color2 = ['rgb(198, 235, 190)'],
             radii = [4, 10, 25];
 
         //load data to the map as new layers.
@@ -166,8 +167,8 @@
                 data: 'assets/us_housing.geojson'
 
             });
-            
-        
+
+
             map.addLayer({
                     'id': 'US-coast-layer',
                     'type': 'circle',
@@ -199,7 +200,7 @@
                             [medianPPSF[2], colors[2]]
 
                             ]
-                        }, 
+                        },
                         'circle-stroke-color': 'white',
                         'circle-stroke-width': 0.4,
                         'circle-opacity': 1
@@ -207,7 +208,7 @@
                     'filter': ['all', filterMonth, filterYear]
                  },
                 'waterway-label'
-                );  
+                );
 
 
             // click on tree to view magnitude in a popup
@@ -223,7 +224,7 @@
 
         var filterMonth = ['==', ['number', ['get', 'month']], 1];
         var filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
-        
+
         document.getElementById('slider').addEventListener('input', (event) => {
         const month = parseInt(event.target.value);
         // update the map
@@ -243,7 +244,7 @@
         if (year === '2020') {
             filterYear = ['==', ['number', ['get', 'year']], 2020];
         } else if (year === '2021') {
-            filterYear = ['==', ['number', ['get', 'year']], 2021]; 
+            filterYear = ['==', ['number', ['get', 'year']], 2021];
         } else if (year === 'all') {
             filterYear = ['match', ['get', 'year'], [2020, 2021], true, false];
         } else {
@@ -274,7 +275,7 @@
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < medianPPSF.length; i++) {
             vbreak = medianPPSF[i];
-            // you need to manually adjust the radius of each dot on the legend 
+            // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels.push(
                 '<p class="break"><i class="dot" style="background:' + colors[i] + '; width: 20px; height: 20px; "></i> <span class="dot-label">' + vbreak +
@@ -296,11 +297,10 @@
         //iterate through grades and create a scaled circle and label for each
         for (var i = 0; i < houseSold.length; i++) {
             vbreak = houseSold[i];
-            const color_for_legend = 'rgb(153,204,255)';
-            // you need to manually adjust the radius of each dot on the legend 
+            // you need to manually adjust the radius of each dot on the legend
             // in order to make sure the legend can be properly referred to the dot on the map.
             labels2.push(
-                '<p class="break"><i class="dot" style="background:' + color_for_legend + '; width:' + 2 * radii[i] + 'px; height: ' +
+                '<p class="break"><i class="dot" style="background:' + color2[0] + '; width:' + 2 * radii[i] + 'px; height: ' +
                 2 * radii[i] + 'px; ; "></i> <span class="dot-label">' + vbreak +
                 '</span></p>');
 
