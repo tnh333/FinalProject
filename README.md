@@ -45,3 +45,5 @@ Some of the multimedia we will use are pictures of certain areas to show what th
 
 **Photos:**
 ![Preview](img/preview1.jpg)
+
+![Preview](img/preview2.jpg)
